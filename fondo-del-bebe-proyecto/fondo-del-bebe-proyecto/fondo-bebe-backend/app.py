@@ -1,5 +1,5 @@
 """
-Backend del Fondo del Bebé — integración con Wompi.
+Backend del Fondo del Bebé — integración con Wompi + Supabase.
 
 Flujo:
 1. El frontend pide una "referencia + firma" para un monto/donante (POST /crear-cobro).
@@ -8,23 +8,27 @@ Flujo:
 4. Solo ahí se guarda el donante como confirmado y se suma al total.
 5. El frontend consulta GET /donantes para pintar la lista y el total, ya verificados.
 
-Variables de entorno necesarias (nunca las pongas en el HTML):
+Los datos se guardan en Supabase (Postgres), no en archivos locales, porque
+el disco de Render (plan gratis) es efímero y se borra en cada sleep/redeploy.
+
+Variables de entorno necesarias (nunca las pongas en el HTML ni en el repo):
   WOMPI_PRIVATE_KEY       -> prv_...
   WOMPI_INTEGRITY_SECRET  -> secreto de integridad (para firmar transacciones)
   WOMPI_EVENTS_SECRET     -> secreto de eventos (para verificar el webhook)
   WOMPI_PUBLIC_KEY        -> pub_... (se expone al frontend, no es secreta)
+  SUPABASE_URL            -> https://xxxxx.supabase.co
+  SUPABASE_SERVICE_KEY    -> la service_role key (o sb_secret_...) de Supabase
 """
 
 import os
 import hashlib
 import hmac
-import json
 import time
 import uuid
-from pathlib import Path
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from supabase import create_client, Client
 
 try:
     from dotenv import load_dotenv
@@ -40,18 +44,10 @@ WOMPI_PRIVATE_KEY = os.environ.get("WOMPI_PRIVATE_KEY", "")
 WOMPI_INTEGRITY_SECRET = os.environ.get("WOMPI_INTEGRITY_SECRET", "")
 WOMPI_EVENTS_SECRET = os.environ.get("WOMPI_EVENTS_SECRET", "")
 
-DATA_FILE = Path(__file__).parent / "donantes.json"
-PENDING_FILE = Path(__file__).parent / "pendientes.json"
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
+SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", "")
 
-
-def _load(path: Path):
-    if path.exists():
-        return json.loads(path.read_text(encoding="utf-8"))
-    return []
-
-
-def _save(path: Path, data):
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
 
 @app.route("/config", methods=["GET"])
@@ -84,15 +80,13 @@ def crear_cobro():
     signature = hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
     # Guardamos el aporte como "pendiente" hasta que llegue el webhook confirmando el pago
-    pending = _load(PENDING_FILE)
-    pending.append({
+    supabase.table("pendientes").insert({
         "reference": reference,
         "name": name,
         "message": message,
         "amount": amount_cop,
         "ts": int(time.time() * 1000),
-    })
-    _save(PENDING_FILE, pending)
+    }).execute()
 
     return jsonify({
         "reference": reference,
@@ -117,7 +111,6 @@ def webhook_wompi():
     checksum_received = event_signature.get("checksum", "")
     timestamp = payload.get("timestamp", "")
 
-    # Construimos el string a partir de las propiedades que Wompi indica, en orden
     def get_nested(d, path):
         cur = d
         for part in path.split("."):
@@ -140,25 +133,23 @@ def webhook_wompi():
     reference = transaction.get("reference")
     amount_in_cents = transaction.get("amount_in_cents", 0)
 
-    if status == "APPROVED":
-        pending = _load(PENDING_FILE)
-        match = next((p for p in pending if p["reference"] == reference), None)
+    if status == "APPROVED" and reference:
+        pending_res = supabase.table("pendientes").select("*").eq("reference", reference).execute()
+        match = pending_res.data[0] if pending_res.data else None
 
         if match:
-            confirmed = _load(DATA_FILE)
-            # Evita duplicados si Wompi reintenta el webhook
-            if not any(d["reference"] == reference for d in confirmed):
-                confirmed.append({
+            # Evita duplicados si Wompi reintenta el webhook (reference es UNIQUE en la tabla)
+            existing = supabase.table("donantes").select("id").eq("reference", reference).execute()
+            if not existing.data:
+                supabase.table("donantes").insert({
                     "reference": reference,
                     "name": match["name"],
                     "message": match["message"],
                     "amount": amount_in_cents // 100,
                     "ts": match["ts"],
-                })
-                _save(DATA_FILE, confirmed)
+                }).execute()
 
-            pending = [p for p in pending if p["reference"] != reference]
-            _save(PENDING_FILE, pending)
+            supabase.table("pendientes").delete().eq("reference", reference).execute()
 
     return jsonify({"ok": True})
 
@@ -166,8 +157,8 @@ def webhook_wompi():
 @app.route("/donantes", methods=["GET"])
 def donantes():
     """Lista pública de aportes ya confirmados, para pintar en la página."""
-    confirmed = _load(DATA_FILE)
-    confirmed.sort(key=lambda d: d["ts"], reverse=True)
+    res = supabase.table("donantes").select("*").order("ts", desc=True).execute()
+    confirmed = res.data or []
     total = sum(d["amount"] for d in confirmed)
     return jsonify({
         "donors": confirmed,
