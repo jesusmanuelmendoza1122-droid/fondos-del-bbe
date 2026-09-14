@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fondo del Bebé — Un ahorro para su futuro</title>
+<script src="https://checkout.wompi.co/widget.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap');
+
+  :root{
+    --sky:#EAF6FB;
+    --sky-deep:#BFE7F5;
+    --lavender:#EDE7FB;
+    --peach:#FFE7D6;
+    --mint:#DFF6EA;
+    --sun:#FFC24B;
+    --coral:#FF7A6E;
+    --grape:#7C6CE0;
+    --teal:#1E9E8B;
+    --ink:#2B2A4A;
+    --ink-soft:#5C5A85;
+    --line:rgba(43,42,74,0.12);
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 8% 8%, var(--sky) 0%, transparent 40%),
+      radial-gradient(circle at 92% 18%, var(--peach) 0%, transparent 38%),
+      radial-gradient(circle at 15% 85%, var(--mint) 0%, transparent 40%),
+      #FFFDF9;
+    color:var(--ink);
+    font-family:'Quicksand',sans-serif;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Fredoka',sans-serif;font-weight:600;}
+  a{color:inherit;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+  /* ============ header ============ */
+  .masthead{padding:22px 32px;}
+  .masthead-inner{
+    max-width:1120px;margin:0 auto;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .brand{font-family:'Fredoka',sans-serif;font-size:20px;font-weight:600;display:flex;align-items:center;gap:10px;color:var(--grape);}
+  nav{display:flex;gap:30px;font-size:14.5px;font-weight:600;}
+  nav a{text-decoration:none;color:var(--ink-soft);}
+  nav a:hover{color:var(--coral);}
+
+  /* ============ hero ============ */
+  .hero{
+    padding:56px 32px 20px;max-width:1120px;margin:0 auto;
+    display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;
+    position:relative;overflow:hidden;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;background:var(--sun);
+    color:#7A4B00;font-weight:700;font-size:13px;padding:8px 16px;
+    border-radius:30px;margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:clamp(36px,4.6vw,54px);line-height:1.1;margin:0 0 20px;
+    max-width:13ch;color:var(--ink);
+  }
+  .hero h1 .pop{color:var(--coral);}
+  .hero p.lede{font-size:17.5px;color:var(--ink-soft);max-width:44ch;margin:0 0 30px;font-weight:500;}
+  .cta-row{display:flex;gap:16px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:16px 30px;
+    font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;
+    border:none;border-radius:40px;font-family:'Quicksand',sans-serif;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary{background:var(--coral);color:#fff;box-shadow:0 8px 20px rgba(255,122,110,0.35);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(255,122,110,0.45);}
+  .btn-ghost{background:#fff;color:var(--grape);border:2px solid var(--lavender);}
+  .btn-ghost:hover{border-color:var(--grape);}
+
+  .hero-art{position:relative;aspect-ratio:1/1;max-width:420px;justify-self:end;width:100%;}
+  .hero-art svg{width:100%;height:100%;display:block;}
+
+  /* ============ progress card ============ */
+  .stat-band{max-width:1120px;margin:0 auto;padding:20px 32px 60px;}
+  .stat-card{
+    background:var(--card);border-radius:28px;padding:32px 36px;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+    box-shadow:0 20px 50px rgba(43,42,74,0.08);
+  }
+  .stat-item{text-align:center;position:relative;}
+  .stat-item:not(:last-child)::after{
+    content:"";position:absolute;right:-12px;top:8px;bottom:8px;width:2px;
+    background:var(--line);
+  }
+  .stat-num{font-family:'Fredoka',sans-serif;font-size:34px;font-weight:600;color:var(--grape);}
+  .stat-label{font-size:13.5px;color:var(--ink-soft);font-weight:600;margin-top:4px;}
+
+  /* ============ why section ============ */
+  .section{padding:70px 32px;}
+  .section-head{text-align:center;max-width:600px;margin:0 auto 50px;}
+  .section-head h2{font-size:clamp(28px,3.2vw,38px);margin:0 0 14px;}
+  .section-head p{color:var(--ink-soft);font-size:16px;font-weight:500;}
+
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1120px;margin:0 auto;}
+  .why-item{
+    background:var(--card);border-radius:24px;padding:30px 26px;
+    box-shadow:0 12px 30px rgba(43,42,74,0.06);
+  }
+  .why-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+  .why-item h3{font-size:19px;margin:0 0 8px;}
+  .why-item p{font-size:14.5px;color:var(--ink-soft);margin:0;font-weight:500;}
+
+  /* ============ give section ============ */
+  .give-outer{padding:0 32px;}
+  .give-wrap{
+    background:linear-gradient(135deg, var(--grape), #6355C7);
+    color:#fff;border-radius:40px;max-width:1120px;margin:0 auto;
+    padding:0;position:relative;overflow:hidden;
+  }
+  .give-wrap::before{
+    content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;
+    border-radius:50%;background:rgba(255,255,255,0.08);
+  }
+  .give-inner{
+    padding:70px 40px;display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;position:relative;
+  }
+  .give-inner h2{font-size:clamp(28px,3.2vw,36px);margin:0 0 18px;color:#fff;}
+  .give-inner > div:first-child p{color:#E4E0FA;max-width:36ch;font-size:15.5px;font-weight:500;}
+  .give-form{background:#fff;color:var(--ink);padding:32px;border-radius:24px;}
+  .give-form h3{font-size:20px;margin:0 0 4px;color:var(--ink);}
+  .give-form p.sub{font-size:13.5px;color:var(--ink-soft);margin:0 0 20px;font-weight:500;}
+  .amount-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+  .amount-grid button{
+    padding:13px 0;border:2px solid var(--line);background:transparent;border-radius:14px;
+    font-family:'Quicksand',sans-serif;font-weight:700;font-size:14.5px;cursor:pointer;color:var(--ink);
+  }
+  .amount-grid button.active,.amount-grid button:hover{border-color:var(--coral);color:var(--coral);background:var(--peach);}
+  input[type="text"],input[type="number"]{
+    width:100%;padding:13px 16px;border:2px solid var(--line);border-radius:14px;
+    font-family:'Quicksand',sans-serif;font-size:14.5px;margin-bottom:12px;background:#FBFAFF;color:var(--ink);
+  }
+  input:focus{outline:none;border-color:var(--grape);}
+  .give-form .btn-primary{width:100%;justify-content:center;margin-top:6px;}
+  .give-form small.note{display:block;margin-top:12px;font-size:12px;color:var(--ink-soft);}
+
+  /* ============ donor list ============ */
+  .wall-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:6px;max-width:1120px;margin-left:auto;margin-right:auto;}
+  .wall-head h2{font-size:clamp(28px,3.2vw,36px);margin:0;}
+  .wall-count{font-size:14px;color:var(--ink-soft);font-weight:600;max-width:1120px;margin:0 auto;}
+  #search{
+    max-width:230px;border:2px solid var(--line);border-radius:14px;
+    padding:10px 16px;background:#fff;font-size:14px;margin-bottom:0;font-family:'Quicksand',sans-serif;
+  }
+  #search:focus{outline:none;border-color:var(--grape);}
+
+  .donor-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:14px;max-width:1120px;margin:28px auto 0;
+    max-height:600px;overflow-y:auto;padding:4px;
+  }
+  .donor-card{
+    background:var(--card);border-radius:18px;padding:16px 18px;
+    box-shadow:0 8px 20px rgba(43,42,74,0.06);border-top:4px solid var(--sun);
+  }
+  .donor-card:nth-child(3n+2){border-top-color:var(--coral);}
+  .donor-card:nth-child(3n){border-top-color:var(--teal);}
+  .donor-card .name{font-weight:700;font-size:14.5px;}
+  .donor-card .msg{font-size:13px;color:var(--ink-soft);margin-top:6px;font-weight:500;font-style:italic;}
+  .donor-card .meta{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:#9997B8;}
+  .donor-card .meta b{color:var(--coral);font-family:'Fredoka',sans-serif;font-size:15px;}
+  .empty-state{padding:50px;text-align:center;color:var(--ink-soft);font-size:14.5px;grid-column:1/-1;font-weight:600;}
+  .load-more{
+    display:block;margin:22px auto 0;background:#fff;border:2px solid var(--line);
+    padding:12px 30px;border-radius:30px;cursor:pointer;font-family:'Quicksand',sans-serif;
+    font-weight:700;color:var(--ink);
+  }
+  .load-more:hover{border-color:var(--grape);color:var(--grape);}
+
+  footer{padding:50px 32px 60px;text-align:center;font-size:13.5px;color:var(--ink-soft);font-weight:600;}
+
+  @media (max-width:880px){
+    .hero{grid-template-columns:1fr;}
+    .hero-art{order:-1;max-width:280px;margin:0 auto;}
+    .stat-card{grid-template-columns:1fr;gap:20px;}
+    .stat-item:not(:last-child)::after{display:none;}
+    .why-grid{grid-template-columns:1fr;}
+    .give-inner{grid-template-columns:1fr;gap:32px;padding:48px 26px;}
+    nav{display:none;}
+    .section{padding:50px 24px;}
+  }
+  .float-shape{position:absolute;border-radius:50%;opacity:0.5;animation:float 7s ease-in-out infinite;pointer-events:none;}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-18px);}}
+  @keyframes popIn{from{opacity:0;transform:scale(0.85) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
+  .stat-card,.why-item,.donor-card{animation:popIn .5s ease both;}
+  .btn-primary:active{transform:scale(0.96);}
+  @media (prefers-reduced-motion: reduce){.float-shape{animation:none;}.stat-card,.why-item,.donor-card{animation:none;}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand">
+      <span style="font-size:24px;">🌙</span> Fondo del Bebé
+    </div>
+    <nav>
+      <a href="#porque">Por qué</a>
+      <a href="#aportar">Aportar</a>
+      <a href="#registro">Registro</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="float-shape" style="width:70px;height:70px;background:var(--sun);top:20px;left:6%;animation-delay:0s;"></div>
+  <div class="float-shape" style="width:40px;height:40px;background:var(--coral);top:60%;left:2%;animation-delay:1.2s;"></div>
+  <div class="float-shape" style="width:50px;height:50px;background:var(--teal);top:8%;right:4%;animation-delay:2s;"></div>
+  <div>
+    <div class="badge">✨ En lugar de un regalo más</div>
+    <h1>Un ahorro que empieza <span class="pop">antes</span> que él, para toda la vida.</h1>
+    <p class="lede">Familia y amigos están reuniendo un fondo para el futuro del bebé — su educación, su primer curso, lo que necesite con los años. Cada aporte queda en el registro para siempre.</p>
+    <div class="cta-row">
+      <a href="#aportar" class="btn btn-primary">Hacer un aporte 💛</a>
+      <a href="#registro" class="btn btn-ghost">Ver el registro</a>
+    </div>
+  </div>
+  <div class="hero-art">
+    <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="210" cy="210" r="200" fill="#EAF6FB"/>
+      <circle cx="100" cy="90" r="10" fill="#FFC24B"/>
+      <circle cx="330" cy="70" r="6" fill="#FF7A6E"/>
+      <circle cx="350" cy="300" r="8" fill="#7C6CE0"/>
+      <circle cx="60" cy="320" r="7" fill="#1E9E8B"/>
+      <path d="M300 90 l6 14 14 6 -14 6 -6 14 -6 -14 -14 -6 14 -6 z" fill="#FFC24B"/>
+      <path d="M90 250 l5 11 11 5 -11 5 -5 11 -5 -11 -11 -5 11 -5 z" fill="#FF7A6E"/>
+      <ellipse cx="210" cy="240" rx="95" ry="88" fill="#FFFFFF"/>
+      <path d="M150 210 q60 -55 120 0 q8 55 -60 78 q-68 -23 -60 -78 z" fill="#FFE7D6"/>
+      <circle cx="185" cy="205" r="7" fill="#2B2A4A"/>
+      <circle cx="235" cy="205" r="7" fill="#2B2A4A"/>
+      <path d="M195 228 q15 14 30 0" stroke="#FF7A6E" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M160 175 q50 -40 100 0" stroke="#7C6CE0" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <circle cx="210" cy="140" r="14" fill="#7C6CE0"/>
+      <path d="M180 320 q30 20 60 0" stroke="#1E9E8B" stroke-width="6" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+</section>
+
+<div class="stat-band">
+  <div class="stat-card">
+    <div class="stat-item">
+      <div class="stat-num" id="raisedAmount">$0</div>
+      <div class="stat-label">Ahorrado hasta ahora</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="donorCount">0</div>
+      <div class="stat-label">Personas aportando</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="avgDonation">$0</div>
+      <div class="stat-label">Aporte promedio</div>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="porque">
+  <div class="section-head">
+    <h2>Un regalo que crece con el tiempo</h2>
+    <p>Sin meta ni límite — cada aporte, grande o pequeño, cuenta y queda guardado para él.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-item">
+      <div class="why-icon" style="background:var(--peach);font-size:26px;">🐷</div>
+      <h3>Se guarda, no se gasta</h3>
+      <p>El 100% de cada aporte queda reservado para el bebé, sin comisiones.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-icon" style="background:var(--mint);font-size:26px;">📖</div>
+      <h3>Queda registrado</h3>
+      <p>Cada persona aparece en el registro con su nombre, mensaje y fecha.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-icon" style="background:var(--lavender);font-size:26px;">🌱</div>
+      <h3>Piensa a futuro</h3>
+      <p>No hay meta ni tope — es una base que sigue creciendo con los años.</p>
+    </div>
+  </div>
+</section>
+
+<div class="give-outer"><div class="give-wrap" id="aportar">
+  <div class="give-inner">
+    <div>
+      <h2>Aporta al fondo</h2>
+      <p>Elige un monto o escribe el tuyo. Deja tu nombre y, si quieres, un mensaje para el bebé.</p>
+    </div>
+    <div class="give-form">
+      <h3>Hacer un aporte</h3>
+      <p class="sub">100% del monto queda guardado en el fondo.</p>
+      <div class="amount-grid" id="amountGrid">
+        <button data-amount="20000">$20.000</button>
+        <button data-amount="50000" class="active">$50.000</button>
+        <button data-amount="100000">$100.000</button>
+      </div>
+      <input type="number" id="customAmount" placeholder="Otro monto (COP)">
+      <input type="text" id="donorName" placeholder="Tu nombre (o Anónimo)">
+      <input type="text" id="donorMsg" placeholder="Un mensaje para el bebé (opcional)">
+      <button class="btn btn-primary" id="giveBtn">Registrar aporte 💛</button>
+      <small class="note">Esta demo guarda tu aporte en el registro público de esta página. No se procesa ningún pago real.</small>
+    </div>
+  </div>
+</div></div>
+
+<section class="section" id="registro">
+  <div class="wall-head">
+    <h2>Registro de aportes</h2>
+    <input type="text" id="search" placeholder="Buscar por nombre...">
+  </div>
+  <div class="wall-count" id="wallCount">0 aportes hasta ahora</div>
+  <div class="donor-grid" id="donorGrid"></div>
+  <button class="load-more" id="loadMoreBtn" style="display:none;">Ver más aportes</button>
+</section>
+
+<footer>
+  🌙 Fondo del Bebé · Ahorro colectivo para su futuro, sin meta ni límite.
+</footer>
+
+<script>
+(function(){
+  const PAGE_SIZE = 60;
+  let allDonors = [];
+  let visibleCount = PAGE_SIZE;
+  let selectedAmount = 50000;
+
+  const grid = document.getElementById('donorGrid');
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+  const searchInput = document.getElementById('search');
+
+  function fmt(n){ return '$' + Math.round(n).toLocaleString('es-CO'); }
+
+  function timeAgo(ts){
+    const diff = Math.max(0, Date.now() - ts);
+    const mins = Math.floor(diff/60000);
+    if(mins < 1) return 'justo ahora';
+    if(mins < 60) return mins + ' min';
+    const hrs = Math.floor(mins/60);
+    if(hrs < 24) return hrs + ' h';
+    return Math.floor(hrs/24) + ' d';
+  }
+
+  function escapeHtml(s){
+    const div = document.createElement('div');
+    div.textContent = s;
+    return div.innerHTML;
+  }
+
+  function burstConfetti(){
+    const colors = ['#FFC24B','#FF7A6E','#7C6CE0','#1E9E8B'];
+    for(let i=0;i<24;i++){
+      const el = document.createElement('div');
+      const size = 6 + Math.random()*6;
+      el.style.cssText = 'position:fixed;left:50%;top:30%;width:'+size+'px;height:'+size+'px;background:'+colors[i%colors.length]+';border-radius:'+(Math.random()>0.5?'50%':'2px')+';pointer-events:none;z-index:9999;';
+      document.body.appendChild(el);
+      const angle = Math.random()*Math.PI*2;
+      const dist = 80 + Math.random()*160;
+      const dx = Math.cos(angle)*dist;
+      const dy = Math.sin(angle)*dist - 60;
+      el.animate([
+        {transform:'translate(0,0) rotate(0deg)', opacity:1},
+        {transform:'translate('+dx+'px,'+dy+'px) rotate('+(Math.random()*360)+'deg)', opacity:0}
+      ], {duration:900+Math.random()*400, easing:'cubic-bezier(.2,.8,.2,1)'});
+      setTimeout(()=>el.remove(), 1400);
+    }
+  }
+
+  // ============================================================
+  // ⚠️ ÚNICO CAMBIO NECESARIO: pon aquí la URL pública de tu backend
+  // desplegado (Railway, Render, etc.), sin "/" al final.
+  // Ejemplo: ' https://fondos-del-bbe.onrender.com'
+  // ============================================================
+  const API_URL = 'https://fondos-del-bbe.onrender.com';
+
+  async function loadDonors(){
+    try{
+      const res = await fetch(API_URL + '/donantes');
+      const data = await res.json();
+      allDonors = (data.donors || []).map(d => ({name:d.name, amount:d.amount, message:d.message, ts:d.ts}));
+    }catch(e){
+      allDonors = [];
+    }
+    render();
+  }
+
+  function render(){
+    const q = searchInput.value.trim().toLowerCase();
+    const filtered = q ? allDonors.filter(d => d.name.toLowerCase().includes(q)) : allDonors;
+
+    const total = allDonors.reduce((s,d)=>s+d.amount,0);
+    const count = allDonors.length;
+    const avg = count ? total/count : 0;
+
+    document.getElementById('raisedAmount').textContent = fmt(total);
+    document.getElementById('donorCount').textContent = count.toLocaleString('es-CO');
+    document.getElementById('avgDonation').textContent = fmt(avg);
+    document.getElementById('wallCount').textContent = count.toLocaleString('es-CO') + (count===1 ? ' aporte hasta ahora' : ' aportes hasta ahora');
+
+    grid.innerHTML = '';
+    if(filtered.length === 0){
+      grid.innerHTML = '<div class="empty-state">' + (q ? 'No encontramos aportes con ese nombre.' : 'Aún no hay aportes. Sé la primera persona en abrir el registro.') + '</div>';
+      loadMoreBtn.style.display = 'none';
+      return;
+    }
+
+    const slice = filtered.slice(0, visibleCount);
+    slice.forEach(d => {
+      const card = document.createElement('div');
+      card.className = 'donor-card';
+      card.innerHTML =
+        '<div class="name">' + escapeHtml(d.name) + '</div>' +
+        (d.message ? '<div class="msg">"' + escapeHtml(d.message) + '"</div>' : '') +
+        '<div class="meta"><span>' + timeAgo(d.ts) + '</span><b>' + fmt(d.amount) + '</b></div>';
+      grid.appendChild(card);
+    });
+
+    loadMoreBtn.style.display = filtered.length > visibleCount ? 'block' : 'none';
+  }
+
+  document.getElementById('amountGrid').addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    document.querySelectorAll('#amountGrid button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedAmount = parseInt(btn.dataset.amount, 10);
+    document.getElementById('customAmount').value = '';
+  });
+
+  document.getElementById('customAmount').addEventListener('input', (e) => {
+    document.querySelectorAll('#amountGrid button').forEach(b => b.classList.remove('active'));
+    selectedAmount = parseInt(e.target.value, 10) || 0;
+  });
+
+  document.getElementById('giveBtn').addEventListener('click', async () => {
+    const customVal = parseInt(document.getElementById('customAmount').value, 10);
+    const amount = customVal > 0 ? customVal : selectedAmount;
+    if(!amount || amount <= 0){
+      alert('Por favor ingresa un monto válido.');
+      return;
+    }
+    const name = document.getElementById('donorName').value.trim() || 'Anónimo';
+    const message = document.getElementById('donorMsg').value.trim();
+    const btn = document.getElementById('giveBtn');
+    btn.disabled = true;
+    btn.textContent = 'Generando link de pago...';
+
+    try{
+      // 1. Le pedimos al backend la referencia + firma (el monto queda protegido)
+      const res = await fetch(API_URL + '/crear-cobro', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ amount, name, message })
+      });
+      if(!res.ok) throw new Error('backend error');
+      const cobro = await res.json();
+
+      // 2. Abrimos el Widget de Wompi con esos datos — el pago real ocurre ahí, no en nuestra página
+      const checkout = new WidgetCheckout({
+        currency: cobro.currency,
+        amountInCents: cobro.amountInCents,
+        reference: cobro.reference,
+        publicKey: cobro.publicKey,
+        signature: { integrity: cobro.signature },
+        redirectUrl: window.location.href.split('#')[0] + '#registro'
+      });
+
+      checkout.open(function (result) {
+        // Esto es solo feedback visual inmediato; el aporte NO se suma
+        // aquí — se suma cuando llega el webhook confirmado al backend.
+        const status = result && result.transaction && result.transaction.status;
+        if(status === 'APPROVED'){
+          alert('¡Pago aprobado! Puede tardar unos segundos en aparecer en el registro mientras se confirma.');
+          burstConfetti();
+        }else if(status){
+          alert('El pago quedó en estado: ' + status);
+        }
+        // Refrescamos la lista real (solo pagos confirmados por el webhook)
+        setTimeout(loadDonors, 3000);
+        setTimeout(loadDonors, 8000);
+        document.getElementById('registro').scrollIntoView({behavior:'smooth'});
+      });
+    }catch(e){
+      alert('No se pudo iniciar el pago. Intenta de nuevo.');
+    }finally{
+      btn.disabled = false;
+      btn.textContent = 'Registrar aporte 💛';
+    }
+  });
+
+  loadMoreBtn.addEventListener('click', () => {
+    visibleCount += PAGE_SIZE;
+    render();
+  });
+
+  searchInput.addEventListener('input', () => {
+    visibleCount = PAGE_SIZE;
+    render();
+  });
+
+  loadDonors();
+})();
+</script>
+
+</body>
+</html>
