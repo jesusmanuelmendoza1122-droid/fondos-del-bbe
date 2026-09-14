@@ -158,6 +158,7 @@ def webhook_wompi():
 def donantes():
     """Lista pública de aportes ya confirmados, para pintar en la página."""
     res = supabase.table("donantes").select("*").order("ts", desc=True).execute()
+    print("DEBUG supabase response:", res, flush=True)
     confirmed = res.data or []
     total = sum(d["amount"] for d in confirmed)
     return jsonify({
@@ -165,6 +166,28 @@ def donantes():
         "total": total,
         "count": len(confirmed),
     })
+
+
+@app.route("/debug-supabase", methods=["GET"])
+def debug_supabase():
+    """Ruta temporal para diagnosticar la conexión a Supabase. Bórrala después."""
+    info = {
+        "supabase_url_set": bool(SUPABASE_URL),
+        "supabase_url_value": SUPABASE_URL,
+        "service_key_set": bool(SUPABASE_SERVICE_KEY),
+        "service_key_length": len(SUPABASE_SERVICE_KEY) if SUPABASE_SERVICE_KEY else 0,
+        "service_key_prefix": SUPABASE_SERVICE_KEY[:15] if SUPABASE_SERVICE_KEY else None,
+    }
+    try:
+        res = supabase.table("donantes").select("*").execute()
+        info["query_ok"] = True
+        info["raw_data"] = res.data
+        info["raw_count"] = getattr(res, "count", None)
+    except Exception as e:
+        info["query_ok"] = False
+        info["error"] = str(e)
+        info["error_type"] = type(e).__name__
+    return jsonify(info)
 
 
 if __name__ == "__main__":
