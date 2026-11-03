@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fondo del Bebé — Un ahorro para su futuro</title>
 <script src="https://checkout.wompi.co/widget.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap');
 
@@ -14,24 +15,30 @@
     --lavender:#EDE7FB;
     --peach:#FFE7D6;
     --mint:#DFF6EA;
-    --sun:#FFC24B;
-    --coral:#FF7A6E;
-    --grape:#7C6CE0;
-    --teal:#1E9E8B;
-    --ink:#2B2A4A;
+    --sun:#F2AE3C;
+    --coral:#F0665A;
+    --grape:#6A59D1;
+    --teal:#189483;
+    --ink:#242245;
     --ink-soft:#5C5A85;
-    --line:rgba(43,42,74,0.12);
+    --line:rgba(36,34,69,0.10);
     --card:#FFFFFF;
+    --boy:#6EC3F4;
+    --boy-deep:#2F92D6;
+    --girl:#F98FC0;
+    --girl-deep:#E85797;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     margin:0;
     background:
-      radial-gradient(circle at 8% 8%, var(--sky) 0%, transparent 40%),
-      radial-gradient(circle at 92% 18%, var(--peach) 0%, transparent 38%),
-      radial-gradient(circle at 15% 85%, var(--mint) 0%, transparent 40%),
+      radial-gradient(circle at 10% 6%, var(--sky) 0%, transparent 42%),
+      radial-gradient(circle at 90% 92%, var(--peach) 0%, transparent 42%),
+      url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIiB2aWV3Qm94PSIwIDAgMTQwIDE0MCI+CiAgPGcgb3BhY2l0eT0iMC41IiBmaWxsPSIjNkE1OUQxIj4KICAgIDxwYXRoIGQ9Ik0yMCAxNmwyLjQgNi4yTDI5IDI0bC02LjYgMS44TDIwIDMybC0yLjQtNi4yTDExIDI0bDYuNi0xLjh6Ii8+CiAgPC9nPgogIDxnIG9wYWNpdHk9IjAuNDUiIGZpbGw9IiNGMDY2NUEiPgogICAgPHBhdGggZD0iTTEwMCAzMGMtMy02LTExLTQtMTEgMiAwIDUgMTEgMTIgMTEgMTJzMTEtNyAxMS0xMmMwLTYtOC04LTExLTJ6Ii8+CiAgPC9nPgogIDxnIG9wYWNpdHk9IjAuNCIgZmlsbD0iIzE4OTQ4MyI+CiAgICA8Y2lyY2xlIGN4PSIzNSIgY3k9Ijk1IiByPSI1Ii8+CiAgPC9nPgogIDxnIG9wYWNpdHk9IjAuNCIgZmlsbD0iI0YyQUUzQyI+CiAgICA8cGF0aCBkPSJNMTA1IDEwMGMwLTQgMy02IDctNmg0YzQgMCA3IDIgNyA2djEwYzAgNS00IDgtOSA4cy05LTMtOS04eiIvPgogIDwvZz4KICA8ZyBvcGFjaXR5PSIwLjQiIGZpbGw9IiMyRjkyRDYiPgogICAgPGNpcmNsZSBjeD0iNjUiIGN5PSI1NSIgcj0iNCIvPgogIDwvZz4KPC9zdmc+"),
       #FFFDF9;
+    background-repeat:no-repeat,no-repeat,repeat,no-repeat;
+    background-size:auto,auto,140px 140px,auto;
     color:var(--ink);
     font-family:'Quicksand',sans-serif;line-height:1.6;
     -webkit-font-smoothing:antialiased;
@@ -41,7 +48,12 @@
   .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
 
   /* ============ header ============ */
-  .masthead{padding:22px 32px;}
+  .masthead{
+    padding:22px 32px;border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:50;background:rgba(255,253,249,0.94);
+    transition:box-shadow .3s ease, padding .3s ease;
+  }
+  .masthead.scrolled{box-shadow:0 8px 24px rgba(36,34,69,0.08);padding:14px 32px;}
   .masthead-inner{
     max-width:1120px;margin:0 auto;
     display:flex;justify-content:space-between;align-items:center;
@@ -58,12 +70,12 @@
     position:relative;overflow:hidden;
   }
   .badge{
-    display:inline-flex;align-items:center;gap:8px;background:var(--sun);
-    color:#7A4B00;font-weight:700;font-size:13px;padding:8px 16px;
-    border-radius:30px;margin-bottom:22px;
+    display:inline-flex;align-items:center;gap:8px;background:rgba(242,174,60,0.16);
+    color:#8A5A0E;font-weight:700;font-size:13px;padding:8px 16px;
+    border-radius:30px;margin-bottom:24px;border:1px solid rgba(242,174,60,0.35);
   }
   .hero h1{
-    font-size:clamp(36px,4.6vw,54px);line-height:1.1;margin:0 0 20px;
+    font-size:clamp(38px,5vw,58px);line-height:1.06;margin:0 0 22px;letter-spacing:-0.01em;
     max-width:13ch;color:var(--ink);
   }
   .hero h1 .pop{color:var(--coral);}
@@ -81,14 +93,19 @@
   .btn-ghost:hover{border-color:var(--grape);}
 
   .hero-art{position:relative;aspect-ratio:1/1;max-width:420px;justify-self:end;width:100%;}
-  .hero-art svg{width:100%;height:100%;display:block;}
+  .hero-photo{
+    width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;
+    box-shadow:0 30px 60px rgba(36,34,69,0.20), 0 0 0 10px rgba(255,255,255,0.6);
+  }
+  .hero-art-wrap{position:relative;width:100%;height:100%;}
 
   /* ============ progress card ============ */
   .stat-band{max-width:1120px;margin:0 auto;padding:20px 32px 60px;}
   .stat-card{
     background:var(--card);border-radius:28px;padding:32px 36px;
     display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
-    box-shadow:0 20px 50px rgba(43,42,74,0.08);
+    box-shadow:0 22px 48px rgba(36,34,69,0.10);
+    border:1px solid rgba(36,34,69,0.05);
   }
   .stat-item{text-align:center;position:relative;}
   .stat-item:not(:last-child)::after{
@@ -107,9 +124,14 @@
   .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1120px;margin:0 auto;}
   .why-item{
     background:var(--card);border-radius:24px;padding:30px 26px;
-    box-shadow:0 12px 30px rgba(43,42,74,0.06);
+    box-shadow:0 12px 30px rgba(36,34,69,0.06);
+    border-top:3px solid var(--line);
   }
-  .why-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+  .why-item:nth-child(1){border-top-color:var(--coral);}
+  .why-item:nth-child(2){border-top-color:var(--teal);}
+  .why-item:nth-child(3){border-top-color:var(--grape);}
+  .why-icon{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:18px;transition:transform .25s ease;}
+  .why-item:hover .why-icon{transform:scale(1.12) rotate(-6deg);}
   .why-item h3{font-size:19px;margin:0 0 8px;}
   .why-item p{font-size:14.5px;color:var(--ink-soft);margin:0;font-weight:500;}
 
@@ -191,15 +213,219 @@
     nav{display:none;}
     .section{padding:50px 24px;}
   }
-  .float-shape{position:absolute;border-radius:50%;opacity:0.5;animation:float 7s ease-in-out infinite;pointer-events:none;}
+  .float-shape{position:absolute;border-radius:50%;opacity:0.28;filter:blur(1px);animation:float 8s ease-in-out infinite;pointer-events:none;}
   @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-18px);}}
   @keyframes popIn{from{opacity:0;transform:scale(0.85) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
   .stat-card,.why-item,.donor-card{animation:popIn .5s ease both;}
   .btn-primary:active{transform:scale(0.96);}
   @media (prefers-reduced-motion: reduce){.float-shape{animation:none;}.stat-card,.why-item,.donor-card{animation:none;}}
+
+  /* ============ reveal panel ============ */
+  .reveal-outer{padding:26px 32px 0;}
+  .reveal-panel{
+    max-width:1120px;margin:0 auto;position:relative;overflow:hidden;
+    border-radius:36px;
+    background:
+      radial-gradient(circle at 8% 10%, rgba(255,255,255,0.5) 0%, transparent 42%),
+      radial-gradient(circle at 92% 90%, rgba(255,255,255,0.35) 0%, transparent 40%),
+      linear-gradient(125deg, var(--boy) 0%, var(--lavender) 52%, var(--girl) 100%);
+    padding:48px 40px 42px;
+    box-shadow:0 24px 60px rgba(43,42,74,0.16);
+  }
+  .reveal-panel .float-shape{opacity:0.35;}
+  .reveal-head{text-align:center;position:relative;z-index:2;margin-bottom:6px;}
+  .reveal-kicker{
+    display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.75);
+    color:var(--grape);font-weight:700;font-size:12.5px;padding:7px 16px;
+    border-radius:30px;margin-bottom:14px;letter-spacing:0.3px;
+  }
+  .reveal-panel h2{
+    font-size:clamp(26px,3.4vw,38px);margin:0 0 8px;color:var(--ink);
+  }
+  .reveal-panel h2 .he{color:var(--boy-deep);}
+  .reveal-panel h2 .she{color:var(--girl-deep);}
+  .reveal-panel > p.sub{color:var(--ink-soft);font-weight:600;font-size:15px;margin:0 auto 30px;max-width:46ch;}
+
+  .countdown{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:560px;
+    margin:0 auto 34px;position:relative;z-index:2;
+  }
+  .cd-box{
+    background:rgba(255,255,255,0.85);backdrop-filter:blur(4px);
+    border-radius:20px;padding:16px 6px 12px;text-align:center;
+    box-shadow:0 10px 24px rgba(43,42,74,0.1);
+  }
+  .cd-num{font-family:'Fredoka',sans-serif;font-size:clamp(24px,4vw,34px);font-weight:600;color:var(--ink);
+    font-variant-numeric:tabular-nums;}
+  .cd-label{font-size:11px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px;}
+  .cd-done{
+    text-align:center;font-family:'Fredoka',sans-serif;font-size:clamp(20px,3vw,28px);
+    color:var(--coral);margin:0 auto 34px;position:relative;z-index:2;
+  }
+
+  .event-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1000px;margin:0 auto;
+    position:relative;z-index:2;
+  }
+  .event-card{
+    background:#fff;border-radius:22px;padding:18px 16px;text-align:center;
+    box-shadow:0 12px 26px rgba(43,42,74,0.09);
+  }
+  .event-icon{
+    width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:19px;margin:0 auto 10px;
+  }
+  .event-card .k{font-size:11px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;}
+  .event-card .v{font-size:14px;font-weight:700;color:var(--ink);line-height:1.35;}
+  .event-card .v a{color:var(--grape);text-decoration:none;}
+  .event-card .v a:hover{text-decoration:underline;}
+
+  .vote-row{
+    display:flex;justify-content:center;gap:16px;margin:30px auto 0;position:relative;z-index:2;flex-wrap:wrap;
+  }
+  .vote-btn{
+    display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:30px;
+    font-family:'Quicksand',sans-serif;font-weight:700;font-size:14.5px;cursor:pointer;border:none;
+    box-shadow:0 8px 18px rgba(43,42,74,0.12);transition:transform .15s ease;
+  }
+  .vote-btn:active{transform:scale(0.96);}
+  .vote-btn.boy{background:var(--boy);color:#fff;}
+  .vote-btn.girl{background:var(--girl);color:#fff;}
+  .vote-result{text-align:center;margin-top:14px;font-size:13px;color:var(--ink-soft);font-weight:600;position:relative;z-index:2;}
+  .vote-bar{max-width:340px;margin:10px auto 0;height:14px;border-radius:10px;overflow:hidden;display:flex;
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,0.6);position:relative;z-index:2;}
+  .vote-bar .b{background:var(--boy-deep);height:100%;transition:width .5s ease;}
+  .vote-bar .g{background:var(--girl-deep);height:100%;transition:width .5s ease;}
+
+  @media (max-width:880px){
+    .countdown{grid-template-columns:repeat(4,1fr);gap:8px;max-width:100%;}
+    .cd-box{padding:12px 2px 10px;border-radius:16px;}
+    .event-grid{grid-template-columns:repeat(2,1fr);}
+    .reveal-panel{padding:34px 20px 30px;border-radius:26px;}
+  }
+
+  /* ============ revelado progresivo al hacer scroll ============ */
+  .reveal-on-scroll{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);}
+  .reveal-on-scroll.in-view{opacity:1;transform:translateY(0);}
+  .stagger.in-view > *{animation:none;}
+  @media (prefers-reduced-motion: reduce){.reveal-on-scroll{opacity:1;transform:none;transition:none;}}
+
+  /* ============ interactividad extra sin peso ============ */
+  .why-item,.event-card,.donor-card,.stat-item,.cd-box{transition:transform .25s ease, box-shadow .25s ease;}
+  .why-item:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(36,34,69,0.12);}
+  .event-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 32px rgba(43,42,74,0.14);}
+  .donor-card:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(43,42,74,0.10);}
+  .stat-item{cursor:default;}
+  .cd-box{transition:transform .2s ease;}
+  .cd-num{transition:transform .25s ease;}
+  .cd-box:hover .cd-num{transform:scale(1.08);}
+
+  nav a{position:relative;}
+  nav a::after{
+    content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;
+    background:var(--coral);transition:width .25s ease;
+  }
+  nav a:hover::after{width:100%;}
+
+  .btn-ghost:hover{transform:translateY(-2px);}
+  .amount-grid button{transition:transform .15s ease, border-color .15s ease, color .15s ease, background .15s ease;}
+  .amount-grid button:active{transform:scale(0.95);}
+
+  .vote-btn:hover{transform:translateY(-3px) scale(1.03);}
+  .vote-btn:disabled{cursor:default;transform:none !important;}
+
+  #search{transition:box-shadow .2s ease, border-color .2s ease;}
+  #search:focus{box-shadow:0 0 0 4px rgba(106,89,209,0.12);}
+
+  .brand span{display:inline-block;animation:sway 4s ease-in-out infinite;}
+  @keyframes sway{0%,100%{transform:rotate(-6deg);}50%{transform:rotate(6deg);}}
+  @media (prefers-reduced-motion: reduce){.brand span{animation:none;}}
+
+  .load-more{transition:transform .2s ease, border-color .2s ease, color .2s ease;}
+  .load-more:hover{transform:translateY(-2px);}
+
+  /* ============ blobs decorativos de fondo ============ */
+  .bg-blob{
+    position:absolute;border-radius:50%;pointer-events:none;z-index:-1;
+    opacity:0.25;
+  }
+  @media (max-width:880px){.bg-blob{display:none;}}
+
+  /* ============ contador de estadísticas con acento ============ */
+  .stat-item .stat-num{position:relative;}
+  .stat-item:hover .stat-num{transform:scale(1.05);}
+  .stat-num{transition:transform .25s ease;display:inline-block;}
+
+  /* ============ avatar de donante ============ */
+  .donor-card{display:flex;gap:12px;align-items:flex-start;}
+  .donor-avatar{
+    flex-shrink:0;width:38px;height:38px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;color:#fff;
+  }
+  .donor-body{flex:1;min-width:0;}
+
+  /* ============ botón con brillo al pasar el mouse ============ */
+  .btn-primary{position:relative;overflow:hidden;}
+  .btn-primary::after{
+    content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+    background:linear-gradient(115deg, transparent, rgba(255,255,255,0.45), transparent);
+    transform:skewX(-20deg);transition:left .6s ease;
+  }
+  .btn-primary:hover::after{left:130%;}
+
+  /* ============ badge del hero con pulso suave ============ */
+  .badge{animation:badgePulse 2.6s ease-in-out infinite;}
+  @keyframes badgePulse{0%,100%{box-shadow:0 0 0 0 rgba(242,174,60,0.25);}50%{box-shadow:0 0 0 8px rgba(242,174,60,0);}}
+  @media (prefers-reduced-motion: reduce){.badge{animation:none;}}
+
+  /* ============ separador ondulado entre secciones ============ */
+  .wave-divider{display:block;width:100%;height:44px;margin-top:-2px;}
+
+  /* ============ decoraciones tema bebé ============ */
+  .baby-deco{
+    position:absolute;pointer-events:none;z-index:1;
+    animation:babyFloat 6s ease-in-out infinite;
+  }
+  @keyframes babyFloat{0%,100%{transform:translateY(0) rotate(var(--r,0deg));}50%{transform:translateY(-14px) rotate(var(--r,0deg));}}
+  @media (prefers-reduced-motion: reduce){.baby-deco{animation:none;}}
+  @media (max-width:880px){.baby-deco.hide-mobile{display:none;}}
+  .section{position:relative;overflow:hidden;}
+  .hero{position:relative;}
+
+  /* ============ franja con foto real ============ */
+  .story-band{
+    position:relative;max-width:1120px;margin:28px auto 0;padding:0 32px;
+  }
+  .story-photo{
+    width:100%;height:260px;object-fit:cover;border-radius:32px;display:block;
+    box-shadow:0 20px 44px rgba(36,34,69,0.14);
+  }
+  .story-overlay{
+    position:absolute;inset:0 32px;border-radius:32px;
+    background:linear-gradient(0deg, rgba(36,34,69,0.55) 0%, rgba(36,34,69,0.05) 55%, transparent 100%);
+    display:flex;flex-direction:column;justify-content:flex-end;padding:24px 30px;
+  }
+  .story-kicker{
+    color:#fff;font-weight:700;font-size:12.5px;background:rgba(255,255,255,0.18);
+    display:inline-block;padding:6px 14px;border-radius:20px;margin-bottom:8px;width:fit-content;
+    backdrop-filter:none;
+  }
+  .story-overlay p{color:#fff;font-weight:600;font-size:15.5px;max-width:52ch;margin:0;}
+  @media (max-width:880px){
+    .story-band{padding:0 18px;}
+    .story-photo{height:200px;border-radius:22px;}
+    .story-overlay{inset:0 18px;border-radius:22px;padding:18px 20px;}
+  }
 </style>
 </head>
 <body>
+
+<div class="bg-blob" style="width:280px;height:280px;background:var(--sky-deep);top:-60px;left:-80px;animation-delay:0s;"></div>
+<div class="bg-blob" style="width:220px;height:220px;background:var(--peach);top:600px;right:-70px;animation-delay:3s;"></div>
+<div class="bg-blob" style="width:260px;height:260px;background:var(--mint);top:1400px;left:-90px;animation-delay:6s;"></div>
+<div class="bg-blob" style="width:240px;height:240px;background:var(--lavender);top:2200px;right:-80px;animation-delay:2s;"></div>
+<div class="bg-blob" style="width:200px;height:200px;background:var(--peach);top:3000px;left:-60px;animation-delay:5s;"></div>
 
 <header class="masthead">
   <div class="masthead-inner">
@@ -207,6 +433,7 @@
       <span style="font-size:24px;">🌙</span> Fondo del Bebé
     </div>
     <nav>
+      <a href="#revelacion">La revelación</a>
       <a href="#porque">Por qué</a>
       <a href="#aportar">Aportar</a>
       <a href="#registro">Registro</a>
@@ -214,7 +441,74 @@
   </div>
 </header>
 
+<div class="reveal-outer" id="revelacion">
+  <div class="reveal-panel">
+    <div class="float-shape" style="width:60px;height:60px;background:var(--boy);top:14px;left:5%;animation-delay:0s;"></div>
+    <div class="float-shape" style="width:36px;height:36px;background:var(--girl);top:70%;left:3%;animation-delay:1.4s;"></div>
+    <div class="float-shape" style="width:44px;height:44px;background:var(--girl);top:10%;right:5%;animation-delay:2.1s;"></div>
+    <div class="float-shape" style="width:26px;height:26px;background:var(--boy);bottom:8%;right:8%;animation-delay:0.8s;"></div>
+
+    <div class="reveal-head">
+      <span class="reveal-kicker">💙💗 ¡Es niño o niña!</span>
+      <h2>La gran <span class="he">reve</span><span class="she">lación</span> de género</h2>
+      <p class="sub">Sábado 14 de noviembre a las 3:30 p.m. — cuenta regresiva en vivo hasta que abramos la caja.</p>
+    </div>
+
+    <div class="countdown" id="countdown">
+      <div class="cd-box"><div class="cd-num" id="cd-days">00</div><div class="cd-label">Días</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-hours">00</div><div class="cd-label">Horas</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-mins">00</div><div class="cd-label">Min</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-secs">00</div><div class="cd-label">Seg</div></div>
+    </div>
+    <div class="cd-done" id="cd-done" style="display:none;">🎉 ¡Hoy se revela el género!</div>
+
+    <div class="event-grid">
+      <div class="event-card">
+        <div class="event-icon" style="background:var(--girl);">📅</div>
+        <div class="k">Fecha</div>
+        <div class="v">Sábado<br>14 de noviembre</div>
+      </div>
+      <div class="event-card">
+        <div class="event-icon" style="background:var(--boy);">🕒</div>
+        <div class="k">Hora</div>
+        <div class="v">3:30 p.m.</div>
+      </div>
+      <div class="event-card">
+        <div class="event-icon" style="background:var(--girl);">📍</div>
+        <div class="k">Lugar</div>
+        <div class="v">Carrera 27 # 34‑4<br>Edificio S‑E‑S, Bucaramanga</div>
+      </div>
+      <div class="event-card">
+        <div class="event-icon" style="background:var(--boy);">📞</div>
+        <div class="k">Confirma</div>
+        <div class="v"><a href="https://wa.me/573219007802" target="_blank" rel="noopener">321 900 7802</a></div>
+      </div>
+    </div>
+
+    <div class="vote-row">
+      <button class="vote-btn boy" id="voteBoy">💙 Voto niño</button>
+      <button class="vote-btn girl" id="voteGirl">💗 Voto niña</button>
+    </div>
+    <div class="vote-bar" id="voteBar"><div class="b" id="voteBarBoy" style="width:50%;"></div><div class="g" id="voteBarGirl" style="width:50%;"></div></div>
+    <div class="vote-result" id="voteResult">Sé el primero en votar — ¿niño o niña?</div>
+  </div>
+</div>
+
 <section class="hero">
+  <svg class="baby-deco hide-mobile" style="top:6%;left:2%;--r:-8deg;width:46px;height:46px;" width="46" height="46" viewBox="0 0 48 48" fill="none">
+    <path d="M18 6h6v8h4c2 0 4 2 4 4v18c0 4-3 7-8 7s-8-3-8-7V18c0-2 2-4 4-4h4V6z" stroke="#F2AE3C" stroke-width="2.4" stroke-linejoin="round"/>
+    <path d="M16 22h12" stroke="#F2AE3C" stroke-width="2.2" stroke-linecap="round"/>
+    <rect x="16" y="4" width="10" height="4" rx="2" fill="#F2AE3C"/>
+  </svg>
+  <svg class="baby-deco hide-mobile" style="top:64%;left:6%;--r:10deg;animation-delay:1.2s;width:40px;height:40px;" width="40" height="40" viewBox="0 0 48 48" fill="none">
+    <circle cx="24" cy="20" r="13" stroke="#6EC3F4" stroke-width="2.4"/>
+    <circle cx="24" cy="20" r="5" fill="#6EC3F4" opacity="0.35"/>
+    <rect x="20" y="33" width="8" height="6" rx="3" fill="#6EC3F4"/>
+    <circle cx="24" cy="42" r="3" fill="#6EC3F4" opacity="0.6"/>
+  </svg>
+  <svg class="baby-deco hide-mobile" style="top:8%;right:3%;--r:12deg;animation-delay:2.4s;width:30px;height:30px;" width="30" height="30" viewBox="0 0 24 24" fill="#F98FC0">
+    <path d="M12 1l2.6 6.9L21 10l-6.4 2.1L12 19l-2.6-6.9L3 10l6.4-2.1L12 1z"/>
+  </svg>
   <div class="float-shape" style="width:70px;height:70px;background:var(--sun);top:20px;left:6%;animation-delay:0s;"></div>
   <div class="float-shape" style="width:40px;height:40px;background:var(--coral);top:60%;left:2%;animation-delay:1.2s;"></div>
   <div class="float-shape" style="width:50px;height:50px;background:var(--teal);top:8%;right:4%;animation-delay:2s;"></div>
@@ -228,28 +522,42 @@
     </div>
   </div>
   <div class="hero-art">
-    <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="210" cy="210" r="200" fill="#EAF6FB"/>
-      <circle cx="100" cy="90" r="10" fill="#FFC24B"/>
-      <circle cx="330" cy="70" r="6" fill="#FF7A6E"/>
-      <circle cx="350" cy="300" r="8" fill="#7C6CE0"/>
-      <circle cx="60" cy="320" r="7" fill="#1E9E8B"/>
-      <path d="M300 90 l6 14 14 6 -14 6 -6 14 -6 -14 -14 -6 14 -6 z" fill="#FFC24B"/>
-      <path d="M90 250 l5 11 11 5 -11 5 -5 11 -5 -11 -11 -5 11 -5 z" fill="#FF7A6E"/>
-      <ellipse cx="210" cy="240" rx="95" ry="88" fill="#FFFFFF"/>
-      <path d="M150 210 q60 -55 120 0 q8 55 -60 78 q-68 -23 -60 -78 z" fill="#FFE7D6"/>
-      <circle cx="185" cy="205" r="7" fill="#2B2A4A"/>
-      <circle cx="235" cy="205" r="7" fill="#2B2A4A"/>
-      <path d="M195 228 q15 14 30 0" stroke="#FF7A6E" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <path d="M160 175 q50 -40 100 0" stroke="#7C6CE0" stroke-width="6" fill="none" stroke-linecap="round"/>
-      <circle cx="210" cy="140" r="14" fill="#7C6CE0"/>
-      <path d="M180 320 q30 20 60 0" stroke="#1E9E8B" stroke-width="6" fill="none" stroke-linecap="round"/>
-    </svg>
+    <div class="hero-art-wrap">
+      <img class="hero-photo" loading="lazy"
+        src="https://burst.shopifycdn.com/photos/baby-toys-bottles-products.jpg?width=700&format=pjpg&exif=0&iptc=0"
+        alt="Cositas de bebé: biberón, sonajero y accesorios">
+      <svg class="baby-deco hide-mobile" style="top:-4%;left:-6%;--r:-14deg;width:52px;height:52px;" width="52" height="52" viewBox="0 0 48 48" fill="none">
+        <path d="M18 6h6v8h4c2 0 4 2 4 4v18c0 4-3 7-8 7s-8-3-8-7V18c0-2 2-4 4-4h4V6z" stroke="#F2AE3C" stroke-width="2.4" stroke-linejoin="round"/>
+        <path d="M16 22h12" stroke="#F2AE3C" stroke-width="2.2" stroke-linecap="round"/>
+        <rect x="16" y="4" width="10" height="4" rx="2" fill="#F2AE3C"/>
+      </svg>
+      <svg class="baby-deco hide-mobile" style="top:6%;right:-8%;--r:12deg;animation-delay:1.6s;width:46px;height:46px;" width="46" height="46" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="20" r="13" stroke="#6A59D1" stroke-width="2.4"/>
+        <rect x="19" y="33" width="10" height="8" rx="4" fill="#6A59D1"/>
+        <ellipse cx="24" cy="45" rx="9" ry="6" fill="#F98FC0"/>
+      </svg>
+      <svg class="baby-deco hide-mobile" style="bottom:2%;left:-8%;--r:8deg;animation-delay:2.4s;width:30px;height:30px;" width="30" height="30" viewBox="0 0 24 24" fill="#F2AE3C">
+        <path d="M12 1l2.6 6.9L21 10l-6.4 2.1L12 19l-2.6-6.9L3 10l6.4-2.1L12 1z"/>
+      </svg>
+      <svg class="baby-deco hide-mobile" style="bottom:-4%;right:2%;--r:-10deg;animation-delay:0.8s;width:34px;height:34px;" width="34" height="34" viewBox="0 0 24 24" fill="#F0665A" opacity="0.85">
+        <path d="M12 21s-7-4.3-9.8-8.6C.5 9 2 5 6 5c2.2 0 3.7 1.3 6 4 2.3-2.7 3.8-4 6-4 4 0 5.5 4 3.8 7.4C19 16.7 12 21 12 21z"/>
+      </svg>
+    </div>
   </div>
 </section>
 
+<div class="story-band">
+  <img class="story-photo" loading="lazy"
+    src="https://burst.shopifycdn.com/photos/baby-nursery.jpg?width=1400&format=pjpg&exif=0&iptc=0"
+    alt="Cuarto de bebé con chupete, paños y osito de peluche">
+  <div class="story-overlay">
+    <span class="story-kicker">✨ El detalle importa</span>
+    <p>Cada aporte queda guardado para lo que él necesite — igual de real que esta cunita que ya lo está esperando.</p>
+  </div>
+</div>
+
 <div class="stat-band">
-  <div class="stat-card">
+  <div class="stat-card reveal-on-scroll">
     <div class="stat-item">
       <div class="stat-num" id="raisedAmount">$0</div>
       <div class="stat-label">Ahorrado hasta ahora</div>
@@ -266,30 +574,56 @@
 </div>
 
 <section class="section" id="porque">
-  <div class="section-head">
+  <svg class="baby-deco hide-mobile" style="top:0%;left:2%;--r:-6deg;width:44px;height:44px;" width="44" height="44" viewBox="0 0 48 48" fill="none">
+    <circle cx="24" cy="26" r="14" stroke="#DFF6EA" stroke-width="0" fill="#189483" opacity="0.14"/>
+    <circle cx="24" cy="26" r="12" stroke="#189483" stroke-width="2.2"/>
+    <circle cx="13" cy="14" r="6" stroke="#189483" stroke-width="2.2"/>
+    <circle cx="35" cy="14" r="6" stroke="#189483" stroke-width="2.2"/>
+    <circle cx="19" cy="24" r="1.6" fill="#189483"/>
+    <circle cx="29" cy="24" r="1.6" fill="#189483"/>
+    <path d="M20 30q4 3 8 0" stroke="#189483" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </svg>
+  <svg class="baby-deco hide-mobile" style="bottom:4%;right:3%;--r:8deg;animation-delay:1.6s;width:40px;height:40px;" width="40" height="40" viewBox="0 0 48 48" fill="none">
+    <ellipse cx="18" cy="38" rx="6" ry="4" fill="#F0665A" opacity="0.7"/>
+    <circle cx="14" cy="30" r="2.4" fill="#F0665A" opacity="0.7"/>
+    <circle cx="19" cy="27" r="2.2" fill="#F0665A" opacity="0.7"/>
+    <circle cx="23.5" cy="29.5" r="2" fill="#F0665A" opacity="0.7"/>
+    <ellipse cx="34" cy="18" rx="6" ry="4" fill="#F0665A" opacity="0.45"/>
+    <circle cx="30" cy="10" r="2.4" fill="#F0665A" opacity="0.45"/>
+    <circle cx="35" cy="7" r="2.2" fill="#F0665A" opacity="0.45"/>
+    <circle cx="39.5" cy="9.5" r="2" fill="#F0665A" opacity="0.45"/>
+  </svg>
+  <div class="section-head reveal-on-scroll">
     <h2>Un regalo que crece con el tiempo</h2>
     <p>Sin meta ni límite — cada aporte, grande o pequeño, cuenta y queda guardado para él.</p>
   </div>
-  <div class="why-grid">
+  <div class="why-grid reveal-on-scroll">
     <div class="why-item">
-      <div class="why-icon" style="background:var(--peach);font-size:26px;">🐷</div>
+      <div class="why-icon" style="background:var(--peach);font-size:30px;">🐷</div>
       <h3>Se guarda, no se gasta</h3>
       <p>El 100% de cada aporte queda reservado para el bebé, sin comisiones.</p>
     </div>
     <div class="why-item">
-      <div class="why-icon" style="background:var(--mint);font-size:26px;">📖</div>
+      <div class="why-icon" style="background:var(--mint);font-size:30px;">📖</div>
       <h3>Queda registrado</h3>
       <p>Cada persona aparece en el registro con su nombre, mensaje y fecha.</p>
     </div>
     <div class="why-item">
-      <div class="why-icon" style="background:var(--lavender);font-size:26px;">🌱</div>
+      <div class="why-icon" style="background:var(--lavender);font-size:30px;">🌱</div>
       <h3>Piensa a futuro</h3>
       <p>No hay meta ni tope — es una base que sigue creciendo con los años.</p>
     </div>
   </div>
 </section>
 
-<div class="give-outer"><div class="give-wrap" id="aportar">
+<div class="give-outer"><div class="give-wrap reveal-on-scroll" id="aportar">
+  <svg class="baby-deco hide-mobile" style="top:6%;left:4%;--r:-4deg;width:52px;height:52px;" width="52" height="52" viewBox="0 0 48 48" fill="none">
+    <path d="M14 30a8 8 0 010-16 10 10 0 0119 -4 8 8 0 013 15.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
+    <path d="M14 30h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity="0.55"/>
+  </svg>
+  <svg class="baby-deco hide-mobile" style="bottom:8%;right:6%;--r:14deg;animation-delay:2s;width:26px;height:26px;" width="26" height="26" viewBox="0 0 24 24" fill="#fff" opacity="0.55">
+    <path d="M12 1l2.6 6.9L21 10l-6.4 2.1L12 19l-2.6-6.9L3 10l6.4-2.1L12 1z"/>
+  </svg>
   <div class="give-inner">
     <div>
       <h2>Aporta al fondo</h2>
@@ -307,13 +641,16 @@
       <input type="text" id="donorName" placeholder="Tu nombre (o Anónimo)">
       <input type="text" id="donorMsg" placeholder="Un mensaje para el bebé (opcional)">
       <button class="btn btn-primary" id="giveBtn">Registrar aporte 💛</button>
-      <small class="note">Esta demo guarda tu aporte en el registro público de esta página. No se procesa ningún pago real.</small>
+      <small class="note">Procesado de forma segura por Wompi. Recibirás confirmación inmediata y tu nombre aparecerá en el registro público en cuanto se acredite el pago.</small>
     </div>
   </div>
 </div></div>
 
 <section class="section" id="registro">
-  <div class="wall-head">
+  <svg class="baby-deco hide-mobile" style="top:2%;right:2%;--r:-10deg;width:38px;height:38px;" width="38" height="38" viewBox="0 0 48 48" fill="none">
+    <path d="M24 40s-15-9-15-19a9 9 0 0115-6.5A9 9 0 0139 21c0 10-15 19-15 19z" fill="#F0665A" opacity="0.16" stroke="#F0665A" stroke-width="2"/>
+  </svg>
+  <div class="wall-head reveal-on-scroll">
     <h2>Registro de aportes</h2>
     <input type="text" id="search" placeholder="Buscar por nombre...">
   </div>
@@ -322,12 +659,182 @@
   <button class="load-more" id="loadMoreBtn" style="display:none;">Ver más aportes</button>
 </section>
 
-<footer>
-  🌙 Fondo del Bebé · Ahorro colectivo para su futuro, sin meta ni límite.
+<footer style="position:relative;">
+  <div style="font-size:22px;margin-bottom:6px;">🌙 ✨ 🍼</div>
+  Fondo del Bebé · Ahorro colectivo para su futuro, sin meta ni límite.
 </footer>
 
 <script>
 (function(){
+  // ============ revelado de secciones al hacer scroll ============
+  // ⚠️ Este bloque va primero y blindado: si algo más abajo falla
+  // (p.ej. Supabase bloqueado por un adblocker), el texto de la
+  // página igual se vuelve visible.
+  try{
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            entry.target.classList.add('in-view');
+            io.unobserve(entry.target);
+          }
+        });
+      }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => io.observe(el));
+    } else {
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('in-view'));
+    }
+  }catch(e){
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('in-view'));
+  }
+  // Red de seguridad adicional: si por cualquier motivo el observer
+  // no llega a marcar algo a tiempo, forzamos visibilidad a los 2.5s.
+  setTimeout(() => {
+    document.querySelectorAll('.reveal-on-scroll:not(.in-view)').forEach(el => el.classList.add('in-view'));
+  }, 2500);
+
+  // ============ nav con sombra al hacer scroll (throttled) ============
+  try{
+    const masthead = document.querySelector('.masthead');
+    let navTicking = false;
+    function onScrollNav(){
+      if(!masthead) return;
+      if(window.scrollY > 12) masthead.classList.add('scrolled');
+      else masthead.classList.remove('scrolled');
+      navTicking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if(!navTicking){
+        requestAnimationFrame(onScrollNav);
+        navTicking = true;
+      }
+    }, {passive:true});
+    onScrollNav();
+  }catch(e){}
+
+  // ============ cuenta regresiva a la revelación ============
+  // Sábado 14 de noviembre de 2026, 3:30 p.m. hora Colombia (UTC-5)
+  const REVEAL_DATE = new Date('2026-11-14T15:30:00-05:00').getTime();
+
+  function tickCountdown(){
+    const now = Date.now();
+    const diff = REVEAL_DATE - now;
+    const wrap = document.getElementById('countdown');
+    const done = document.getElementById('cd-done');
+    if(diff <= 0){
+      if(wrap) wrap.style.display = 'none';
+      if(done) done.style.display = 'block';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const pad = n => String(n).padStart(2,'0');
+    document.getElementById('cd-days').textContent = pad(d);
+    document.getElementById('cd-hours').textContent = pad(h);
+    document.getElementById('cd-mins').textContent = pad(m);
+    document.getElementById('cd-secs').textContent = pad(s);
+  }
+  tickCountdown();
+  setInterval(tickCountdown, 1000);
+
+  // ============ votación niño / niña (guardada en Supabase) ============
+  // ⚠️ Todo este bloque queda blindado: si el script de Supabase no
+  // cargó (bloqueado, red lenta, etc.) simplemente se desactiva la
+  // votación, pero el resto de la página sigue funcionando normal.
+  try{
+  (function(){
+    const SUPABASE_URL = 'https://ksnnavwjswyynojpnhhz.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtzbm5hdndqc3d5eW5vanBuaGh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4ODU5MzEsImV4cCI6MjEwNDQ2MTkzMX0.npQ6ZrBHRH7RhUWIeboJ4oIO3rHrVCkPeVcioDOc02g';
+    const TABLE = 'votos_revelacion';
+    const TOKEN_KEY = 'revelacion_voter_token';
+    const VOTE_KEY = 'revelacion_voto';
+
+    if(!window.supabase) throw new Error('Supabase no disponible');
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    function getVoterToken(){
+      let token = localStorage.getItem(TOKEN_KEY);
+      if(!token){
+        token = (crypto.randomUUID ? crypto.randomUUID() : 'v-' + Date.now() + '-' + Math.random().toString(16).slice(2));
+        try{ localStorage.setItem(TOKEN_KEY, token); }catch(e){}
+      }
+      return token;
+    }
+
+    const btnBoy = document.getElementById('voteBoy');
+    const btnGirl = document.getElementById('voteGirl');
+    const barBoy = document.getElementById('voteBarBoy');
+    const barGirl = document.getElementById('voteBarGirl');
+    const resultEl = document.getElementById('voteResult');
+
+    function lockButtons(){
+      btnBoy.disabled = true; btnGirl.disabled = true;
+      btnBoy.style.opacity = 0.6; btnGirl.style.opacity = 0.6;
+    }
+
+    function paintBars(counts){
+      const total = counts.boy + counts.girl;
+      const pctBoy = total ? Math.round((counts.boy/total)*100) : 50;
+      const pctGirl = total ? 100 - pctBoy : 50;
+      barBoy.style.width = pctBoy + '%';
+      barGirl.style.width = pctGirl + '%';
+      return {pctBoy, pctGirl, total};
+    }
+
+    async function fetchCounts(){
+      const [{count: boyCount}, {count: girlCount}] = await Promise.all([
+        sb.from(TABLE).select('*', {count:'exact', head:true}).eq('choice','boy'),
+        sb.from(TABLE).select('*', {count:'exact', head:true}).eq('choice','girl')
+      ]);
+      return {boy: boyCount || 0, girl: girlCount || 0};
+    }
+
+    async function renderVote(){
+      let counts = {boy:0, girl:0};
+      try{
+        counts = await fetchCounts();
+      }catch(e){
+        resultEl.textContent = 'No se pudo cargar la votación. Intenta de nuevo más tarde.';
+        return;
+      }
+      const {pctBoy, pctGirl} = paintBars(counts);
+      const myVote = localStorage.getItem(VOTE_KEY);
+      if(myVote){
+        resultEl.textContent = 'Votaste por "' + (myVote === 'boy' ? 'niño' : 'niña') + '" · 💙 ' + pctBoy + '% — 💗 ' + pctGirl + '%';
+        lockButtons();
+      }else if(counts.boy + counts.girl > 0){
+        resultEl.textContent = '💙 ' + pctBoy + '% — 💗 ' + pctGirl + '%';
+      }
+    }
+
+    async function castVote(choice){
+      if(localStorage.getItem(VOTE_KEY)) return;
+      lockButtons();
+      resultEl.textContent = 'Registrando tu voto...';
+      try{
+        const voter_token = getVoterToken();
+        const {error} = await sb.from(TABLE).insert({choice, voter_token});
+        if(error) throw error;
+        try{ localStorage.setItem(VOTE_KEY, choice); }catch(e){}
+        await renderVote();
+      }catch(e){
+        btnBoy.disabled = false; btnGirl.disabled = false;
+        btnBoy.style.opacity = 1; btnGirl.style.opacity = 1;
+        resultEl.textContent = 'No se pudo registrar tu voto. Intenta de nuevo.';
+      }
+    }
+
+    if(btnBoy) btnBoy.addEventListener('click', () => castVote('boy'));
+    if(btnGirl) btnGirl.addEventListener('click', () => castVote('girl'));
+    renderVote();
+  })();
+  }catch(e){
+    const resultEl = document.getElementById('voteResult');
+    if(resultEl) resultEl.textContent = 'La votación no está disponible en este momento.';
+  }
+
   const PAGE_SIZE = 60;
   let allDonors = [];
   let visibleCount = PAGE_SIZE;
@@ -338,6 +845,27 @@
   const searchInput = document.getElementById('search');
 
   function fmt(n){ return '$' + Math.round(n).toLocaleString('es-CO'); }
+
+  const _numCache = {};
+  const _numFrames = {};
+  function animateNumber(id, target, formatter){
+    const el = document.getElementById(id);
+    if(!el) return;
+    const from = _numCache[id] || 0;
+    _numCache[id] = target;
+    if(_numFrames[id]) cancelAnimationFrame(_numFrames[id]);
+    if(from === target){ el.textContent = formatter(target); return; }
+    const duration = 700;
+    const start = performance.now();
+    function step(now){
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = from + (target - from) * eased;
+      el.textContent = formatter(val);
+      if(p < 1) _numFrames[id] = requestAnimationFrame(step);
+    }
+    _numFrames[id] = requestAnimationFrame(step);
+  }
 
   function timeAgo(ts){
     const diff = Math.max(0, Date.now() - ts);
@@ -353,6 +881,15 @@
     const div = document.createElement('div');
     div.textContent = s;
     return div.innerHTML;
+  }
+
+  function hashCode(str){
+    let hash = 0;
+    for(let i=0;i<str.length;i++){
+      hash = (hash << 5) - hash + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return hash;
   }
 
   function burstConfetti(){
@@ -377,9 +914,9 @@
   // ============================================================
   // ⚠️ ÚNICO CAMBIO NECESARIO: pon aquí la URL pública de tu backend
   // desplegado (Railway, Render, etc.), sin "/" al final.
-  // Ejemplo: 'https://fondo-bebe-production.up.railway.app'
+  // Ejemplo: ' https://fondos-del-bbe.onrender.com'
   // ============================================================
-  const API_URL = 'https://TU-BACKEND.up.railway.app';
+  const API_URL = 'https://fondos-del-bbe.onrender.com';
 
   async function loadDonors(){
     try{
@@ -400,9 +937,9 @@
     const count = allDonors.length;
     const avg = count ? total/count : 0;
 
-    document.getElementById('raisedAmount').textContent = fmt(total);
-    document.getElementById('donorCount').textContent = count.toLocaleString('es-CO');
-    document.getElementById('avgDonation').textContent = fmt(avg);
+    animateNumber('raisedAmount', total, fmt);
+    animateNumber('donorCount', count, n => n.toLocaleString('es-CO'));
+    animateNumber('avgDonation', avg, fmt);
     document.getElementById('wallCount').textContent = count.toLocaleString('es-CO') + (count===1 ? ' aporte hasta ahora' : ' aportes hasta ahora');
 
     grid.innerHTML = '';
@@ -413,13 +950,19 @@
     }
 
     const slice = filtered.slice(0, visibleCount);
-    slice.forEach(d => {
+    const avatarColors = ['#F0665A','#6A59D1','#189483','#F2AE3C','#E85797','#2F92D6'];
+    slice.forEach((d, i) => {
       const card = document.createElement('div');
       card.className = 'donor-card';
+      const initial = (d.name || '?').trim().charAt(0).toUpperCase() || '?';
+      const color = avatarColors[Math.abs(hashCode(d.name || '')) % avatarColors.length];
       card.innerHTML =
+        '<div class="donor-avatar" style="background:' + color + ';">' + escapeHtml(initial) + '</div>' +
+        '<div class="donor-body">' +
         '<div class="name">' + escapeHtml(d.name) + '</div>' +
         (d.message ? '<div class="msg">"' + escapeHtml(d.message) + '"</div>' : '') +
-        '<div class="meta"><span>' + timeAgo(d.ts) + '</span><b>' + fmt(d.amount) + '</b></div>';
+        '<div class="meta"><span>' + timeAgo(d.ts) + '</span><b>' + fmt(d.amount) + '</b></div>' +
+        '</div>';
       grid.appendChild(card);
     });
 
@@ -455,13 +998,26 @@
 
     try{
       // 1. Le pedimos al backend la referencia + firma (el monto queda protegido)
-      const res = await fetch(API_URL + '/crear-cobro', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ amount, name, message })
-      });
-      if(!res.ok) throw new Error('backend error');
-      const cobro = await res.json();
+      //    Reintentamos varias veces: el backend gratuito en Render se "duerme"
+      //    por inactividad y puede tardar hasta ~50s en despertar.
+      let cobro = null;
+      const maxIntentos = 4;
+      for(let intento = 1; intento <= maxIntentos; intento++){
+        try{
+          if(intento > 1) btn.textContent = 'Despertando servidor... (' + intento + '/' + maxIntentos + ')';
+          const res = await fetch(API_URL + '/crear-cobro', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ amount, name, message })
+          });
+          if(!res.ok) throw new Error('backend error ' + res.status);
+          cobro = await res.json();
+          break;
+        }catch(errIntento){
+          if(intento === maxIntentos) throw errIntento;
+          await new Promise(r => setTimeout(r, 4000));
+        }
+      }
 
       // 2. Abrimos el Widget de Wompi con esos datos — el pago real ocurre ahí, no en nuestra página
       const checkout = new WidgetCheckout({
@@ -489,7 +1045,7 @@
         document.getElementById('registro').scrollIntoView({behavior:'smooth'});
       });
     }catch(e){
-      alert('No se pudo iniciar el pago. Intenta de nuevo.');
+      alert('No se pudo iniciar el pago. El servidor puede estar despertando, intenta de nuevo en unos segundos.');
     }finally{
       btn.disabled = false;
       btn.textContent = 'Registrar aporte 💛';
@@ -506,7 +1062,7 @@
     render();
   });
 
-  loadDonors();
+  try{ loadDonors(); }catch(e){}
 })();
 </script>
 
